@@ -22,7 +22,7 @@ func ListStructColumnName(aa interface{}) []string {
 
 // struct to map[key]types  types is string
 func ListStructKeyType(aa interface{}) map[string]string {
-	var send map[string]string // map[column]ColumnType
+	send := make(map[string]string) // map[column]ColumnType
 	v := reflect.ValueOf(aa)
 	type_of_fields := v.Type()
 
@@ -36,7 +36,7 @@ func ListStructKeyType(aa interface{}) map[string]string {
 
 // struct to map[key]value  ,  value is interface,  check it type
 func ListStructKeyValue(aa interface{}) map[string]interface{} {
-	var send map[string]interface{} // map[column]ColumnType
+	send := make(map[string]interface{}) // map[column]ColumnType
 	v := reflect.ValueOf(aa)
 	type_of_fields := v.Type()
 
@@ -44,7 +44,6 @@ func ListStructKeyValue(aa interface{}) map[string]interface{} {
 		column := type_of_fields.Field(i).Name
 		send[column] = v.Field(i).Interface()
 	}
-
 	return send
 }
 
