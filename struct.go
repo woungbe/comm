@@ -6,6 +6,32 @@ import (
 	"strconv"
 )
 
+type StructType struct {
+	Name  string
+	Type  string
+	Value interface{}
+}
+
+type StructInfoList struct {
+	Data []StructType
+}
+
+func NewStructInfo(aa interface{}) *StructInfoList {
+	sInfo := &StructInfoList{}
+
+	v := reflect.ValueOf(aa)
+	type_of_fields := v.Type()
+	for i := 0; i < v.NumField(); i++ {
+		st := StructType{}
+		st.Name = type_of_fields.Field(i).Name
+		st.Type = type_of_fields.Field(i).Type.String()
+		st.Value = v.Field(i).Interface()
+		sInfo.Data = append(sInfo.Data, st)
+	}
+
+	return sInfo
+}
+
 // get struct column list
 func ListStructColumnName(aa interface{}) []string {
 	var send []string
